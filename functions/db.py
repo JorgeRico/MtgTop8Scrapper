@@ -1,16 +1,20 @@
 import mysql.connector
 from mysql.connector import Error
+import os
+
 class Db:
 
     def __init__(self):
         # ## docker connection
         # self.hostName     = 'host.docker.internal'
         # ## localhost connection
-        self.hostName     = 'localhost'
-        self.portName     = '3308'
-        self.databaseName = 'app-database'
-        self.userName     = 'user'
-        self.passwordText = 'password'
+
+        # ## database
+        self.hostName     = os.getenv('HOSTNAME', 'localhost')
+        self.portName     = os.getenv('PORTNAME', '3308')
+        self.databaseName = os.getenv('DATABASENAME', 'app-database')
+        self.userName     = os.getenv('USERNAME', 'user')
+        self.passwordText = os.getenv('PASSWORDTEXT', 'password')
 
     def connection(self):
         connection = None
