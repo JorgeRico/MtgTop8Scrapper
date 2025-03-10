@@ -1,7 +1,5 @@
 # Byte-compiled / optimized / DLL files
 functions/db.py
-/functions/db.py
-db.py
 __pycache__/
 *.py[cod]
 *$py.class
