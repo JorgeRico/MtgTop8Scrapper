@@ -1,28 +1,26 @@
 import mysql.connector
 from mysql.connector import Error
 import os
+from dotenv import load_dotenv
 
 class Db:
 
     def __init__(self):
-        # ## docker connection
-        # self.hostName     = 'host.docker.internal'
-        # ## localhost connection
-
+        load_dotenv()
         # ## database
-        self.hostName     = os.getenv('HOSTNAME', 'localhost')
-        self.portName     = os.getenv('PORTNAME', '3308')
-        self.databaseName = os.getenv('DATABASENAME', 'app-database')
-        self.userName     = os.getenv('USERNAME', 'user')
-        self.passwordText = os.getenv('PASSWORDTEXT', 'password')
+        self.config = {
+            'host'     : os.getenv('HOST_NAME'),
+            'port'     : os.getenv('PORT_NAME'),
+            'database' : os.getenv('DATABASE_NAME'),
+            'user'     : os.getenv('USER_NAME'),
+            'password' : os.getenv('PASSWORD')
+        }
 
     def connection(self):
         connection = None
-        try:
-            connection = self.connect()
 
-            if connection.is_connected():
-                self.connected(connection)
+        try:
+            connection = mysql.connector.connect(**self.getConfig())
 
             return connection
                 
@@ -32,27 +30,8 @@ class Db:
         #     if connection.is_connected():
         #         self.endConnection(connection)
 
-    def connect(self):
-        connection = mysql.connector.connect(
-            host     = self.hostName,
-            port     = self.portName,
-            database = self.databaseName,
-            user     = self.userName,
-            password = self.passwordText
-        )
-        
-        return connection
-
-    def connected(self, connection):
-        try:
-            db_Info = connection.get_server_info()
-            # print("Connected to MySQL Server version %s" %db_Info)
-            cursor = connection.cursor()
-            cursor.execute("select database();")
-            record = cursor.fetchone()
-            # print("You're connected to database: %s" %record)
-        except Error as e:
-            print("Error while connecting to MySQL %s" %e)
+    def getConfig(self):
+        return self.config
 
     def endConnection(self, connection):
         try:

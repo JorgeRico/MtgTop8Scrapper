@@ -2,7 +2,6 @@ from classes.top8 import Top8
 from functions.functions import Scrapping
 from classes.tournament import Tournament
 from classes.league import League
-from dotenv import load_dotenv
 
 # tournaments
 # league and name hardcoded
@@ -57,9 +56,6 @@ def main(tournaments):
 # ---------------------------------
 # Start
 # ---------------------------------
-# load envars
-load_dotenv()
-# torunaments
 print(' - Start scrapping !!!')
 main(tournaments)
 print(' - Finish scrapping !!!')
