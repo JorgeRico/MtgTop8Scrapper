@@ -11,7 +11,7 @@ tournaments = [
     {
         'league' : 3,
         'name'   : 'LCL Ingenio 2025',
-        'ids'    : [ 63650, 64751 ]
+        'ids'    : [ 63650, 64751, 65832 ]
     },
     {
         'league' : 4,
@@ -35,10 +35,13 @@ def scrapping(id, name, idLeague):
     
     if (len(result) == 0):
         idTournament = tournament.getTournamentData(soup, id, name, idLeague)
-        # top 8 players
-        top.setTop8Players(soup, idTournament)
-        # decks and cards
-        top.setTop8PlayersDecks()
+    else:
+        idTournament = result[0][0]
+
+    # top 8 players
+    top.setTop8Players(soup, idTournament)
+    # decks and cards
+    top.setTop8PlayersDecks()
 
 # main function
 def main(tournaments):

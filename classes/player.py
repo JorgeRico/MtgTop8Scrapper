@@ -2,13 +2,14 @@ from functions.db import Db
 from classes.deck import Deck
 from functions.functions import Scrapping
 class Player:
-    def __init__(self, num, playerName, deckName, deckHref):
-        self.num        = num
-        self.playerName = playerName
-        self.deckName   = deckName
-        self.deckHref   = deckHref
-        self.cards      = None
-        self.idPlayer   = None
+    def __init__(self, num, playerName, deckName, deckHref, idTournament):
+        self.num          = num
+        self.playerName   = playerName
+        self.deckName     = deckName
+        self.deckHref     = deckHref
+        self.cards        = None
+        self.idPlayer     = None
+        self.idTournament = idTournament
     
     def getPlayerNum(self):
         return str(self.num)
@@ -26,23 +27,28 @@ class Player:
         return self.cards
 
     def getIdPlayer(self):
+        if self.idPlayer is None:
+            result = self.existsPlayerOnDB(self.idTournament)
+            self.setIdPlayer(result[0][0])
         return self.idPlayer
-    
-    def setPlayerDeck(self, deck):
-        self.cards = deck
 
     def setIdPlayer(self, idPlayer):
         self.idPlayer = idPlayer
 
     def setPlayerDeck(self):
         deck   = Deck()
-        idDeck = deck.savePlayerDeck(self.getPlayerDeckName(), self.getIdPlayer())
-        self.savePlayerIdDeck(idDeck)
+        result = self.playerHasIdDeckOnDB()
+        if (result[0][0] is None):
+            print(" - Insert deck player %s" %self.getIdPlayer())
+            idDeck = deck.savePlayerDeck(self.getPlayerDeckName(), self.getIdPlayer())
+            self.savePlayerIdDeck(idDeck)
 
-        # scrap deck
-        soup = Scrapping()
-        soup = soup.getSoup(self.getPlayerDeckHref())
-        deck.getDeck(idDeck, soup)
+            # scrap deck
+            soup = Scrapping()
+            soup = soup.getSoup(self.getPlayerDeckHref())
+            deck.getDeck(idDeck, soup)
+        else:
+            print('deck exists')
 
     def savePlayer(self, idTournament):
         db          = Db()
@@ -53,9 +59,23 @@ class Player:
     def savePlayerIdDeck(self, idDeck):
         db          = Db()
         connection  = db.connection()
-        updateQuery = "UPDATE player SET idDeck = '%s' WHERE id = '%s'" %(idDeck, self.idPlayer)
+        updateQuery = "UPDATE player SET idDeck = '%s' WHERE id = '%s'" %(idDeck, self.getIdPlayer())
         db.executeQuery(connection, updateQuery)
 
     def printPlayerDeckCards(self):
         for item in self.cards:
             print(item.printCard())
+
+    def existsPlayerOnDB(self, idTournament):
+        db         = Db()
+        connection = db.connection()
+        query      = 'SELECT id as idPlayer FROM player WHERE name = "%s" and position = "%s" and idTournament = "%s";' %(self.getPlayerName(), self.getPlayerNum(), idTournament)
+        
+        return db.selectQuery(connection, query)
+    
+    def playerHasIdDeckOnDB(self):
+        db         = Db()
+        connection = db.connection()
+        query      = 'SELECT idDeck as idDeck FROM player WHERE id = %s;' %(self.getIdPlayer())
+        
+        return db.selectQuery(connection, query)

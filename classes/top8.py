@@ -7,18 +7,18 @@ class Top8:
     def getTopPlayers(self):
         return self.topPlayers
     
-    def setTopPlayer(self, deckName, playerName, deckHref):
+    def setTopPlayer(self, deckName, playerName, deckHref, idTournament):
         scrapping = Scrapping()
         if deckName != '' and playerName != '' and deckHref != '':
             num    = len(self.topPlayers)
-            player = Player(num+1, playerName, deckName, scrapping.getPlayerDeckUrl(deckHref))
+            player = Player(num+1, playerName, deckName, scrapping.getPlayerDeckUrl(deckHref), idTournament)
             self.topPlayers.append(player)
             
             return True
         
         return False
 
-    def scrapTopPlayers(self, soup, className):
+    def scrapTopPlayers(self, soup, className, idTournament):
         for set in soup.findAll('div', attrs={"class": className}):
             num = 0
 
@@ -39,13 +39,13 @@ class Top8:
                             playerName = name.decode(encoding="ISO-8859-1",errors="ignore")
                     num+=1
             
-            if self.setTopPlayer(deckName, playerName, deckHref) == True:
+            if self.setTopPlayer(deckName, playerName, deckHref, idTournament) == True:
                 deckName   = ''
                 playerName = ''
     
     def setTop8Players(self, soup, idTournament):
-        self.scrapTopPlayers(soup, "chosen_tr")
-        self.scrapTopPlayers(soup, "hover_tr")
+        self.scrapTopPlayers(soup, "chosen_tr", idTournament)
+        self.scrapTopPlayers(soup, "hover_tr", idTournament)
         self.saveTop8Data(str(idTournament))
 
     def setTop8PlayersDecks(self):
@@ -54,9 +54,10 @@ class Top8:
     
     def saveTop8Data(self, idTournament):
         for item in self.topPlayers:
-            item.savePlayer(idTournament)
+            if (len(item.existsPlayerOnDB(idTournament)) == 0):
+                print(' - Insert %s' %item)
+                item.savePlayer(idTournament)
 
     def printTopPlayers(self):
         for item in self.topPlayers:
             print(' - ' + str(item.getPlayerNum()) + ' ||| ' + item.getPlayerName() + ' ||| ' + item.getPlayerDeckName() + ' ||| ' + item.getPlayerDeckHref())
-

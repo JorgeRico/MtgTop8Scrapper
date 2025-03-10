@@ -36,6 +36,6 @@ class Tournament():
     def existsTournamentOnDB(self, idTournament):
         db         = Db()
         connection = db.connection()
-        query      = 'SELECT idTournament as idTournament FROM tournament WHERE idTournament = %s;' %(idTournament)
+        query      = 'SELECT id as id FROM tournament WHERE idTournament = %s;' %(idTournament)
         
         return db.selectQuery(connection, query)
