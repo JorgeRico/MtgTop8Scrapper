@@ -30,7 +30,7 @@ class Player:
         if self.idPlayer is None:
             result = self.existsPlayerOnDB(self.idTournament)
             self.setIdPlayer(result[0][0])
-        return self.idPlayer
+        return result[0][0]
 
     def setIdPlayer(self, idPlayer):
         self.idPlayer = idPlayer
@@ -39,7 +39,7 @@ class Player:
         deck   = Deck()
         result = self.playerHasIdDeckOnDB()
         if (result[0][0] is None):
-            print(" - Insert deck player %s" %self.getIdPlayer())
+            print(" - Insert deck player %s - %s" %(self.getPlayerName(), self.getPlayerDeckName))
             idDeck = deck.savePlayerDeck(self.getPlayerDeckName(), self.getIdPlayer())
             self.savePlayerIdDeck(idDeck)
 

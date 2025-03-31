@@ -55,7 +55,7 @@ class Top8:
     def saveTop8Data(self, idTournament):
         for item in self.topPlayers:
             if (len(item.existsPlayerOnDB(idTournament)) == 0):
-                print(' - Insert %s' %item)
+                print(' - Insert %s - %s' %(item.getPlayerNum(),item.getPlayerName()))
                 item.savePlayer(idTournament)
 
     def printTopPlayers(self):

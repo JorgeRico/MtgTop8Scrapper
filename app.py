@@ -15,7 +15,7 @@ tournaments = [
     {
         'league' : 4,
         'name'   : 'Lliga Minoria 2025',
-        'ids'    :  [ 64013, 65170 ]
+        'ids'    :  [ 64013, 65170, 66796 ]
     },
 ]
 
