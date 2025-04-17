@@ -32,7 +32,7 @@ class Scrapping:
     def getScryfallUrlCardData(self, name):
         return self.scryfall + '/named?exact=' + name
     
-    def convertCardName(elf, cardName):
+    def convertCardName(self, cardName):
         cardName = unidecode.unidecode(cardName)
         cardName = cardName.replace('L 3/4rien', 'Lorien')
         cardName = cardName.replace('Lurien', 'Lorien')

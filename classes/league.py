@@ -1,21 +1,24 @@
-from classes.card import Card
 from functions.db import Db
 
 class League:
-    def __init__(self, id, name):
+    def __init__(self, id, name, year):
         self.id   = id
         self.name = name
+        self.year = year
 
     def getLeagueId(self):
         return self.id
     
     def getLeagueName(self):
         return self.name
+    
+    def getLeagueYear(self):
+        return self.year
 
     def saveLeague(self):
         db         = Db()
         connection = db.connection()
         
-        query = 'INSERT INTO league (id, name) VALUES ( "%s", "%s" ) ' %(self.id, self.name)
-        query += 'ON DUPLICATE KEY UPDATE id="%s", name="%s";' %(self.id, self.name)
+        query = 'INSERT INTO league (id, name, year) VALUES ( "%s", "%s", "%s" ) ' %(self.id, self.name, self.year)
+        query += 'ON DUPLICATE KEY UPDATE id="%s", name="%s", year="%s";' %(self.id, self.name, self.year)
         db.executeInsertQuery(connection, query)

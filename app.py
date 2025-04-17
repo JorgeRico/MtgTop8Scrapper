@@ -8,14 +8,34 @@ from classes.league import League
 # ids from www.mtgtop8.com
 tournaments = [
     {
+        'league' : 1,
+        'name'   : 'LCL Ingenio 2024',
+        'ids'    : [ 51344, 52277, 53297, 54778, 55496, 56478, 57208, 58206, 59596, 60803, 61540, 62960 ],
+        'year'   : 2024
+    },
+    {
+        'league' : 2,
+        'name'   : 'Lliga Minoria 2024',
+        'ids'    :  [ 52033, 52633, 53585, 54411, 55694, 56867, 57385, 58500, 59909, 60407, 61872 ],
+        'year'   : 2024
+    },
+    {
         'league' : 3,
         'name'   : 'LCL Ingenio 2025',
-        'ids'    : [ 63650, 64751, 65832, 67365 ]
+        'ids'    : [ 63650, 64751, 65832, 67365 ],
+        'year'   : 2025
     },
     {
         'league' : 4,
         'name'   : 'Lliga Minoria 2025',
-        'ids'    :  [ 64013, 65170, 66796 ]
+        'ids'    :  [ 64013, 65170, 66796 ],
+        'year'   : 2025
+    },
+    {
+        'league' : 6,
+        'name'   : 'Lliga Minoria 2023',
+        'ids'    :  [ 41078, 41746, 42776, 45801, 47102, 47808, 48961, 49678, 50144 ],
+        'year'   : 2023
     },
 ]
 
@@ -46,7 +66,7 @@ def scrapping(id, name, idLeague):
 def main(tournaments):
     for item in tournaments:
         print('   - Scrapping : %s' %(item['name']))
-        league = League(item['league'], item['name'])
+        league = League(item['league'], item['name'], item['year'])
         league.saveLeague()
         for id in item['ids']:
             print('     * Scrapping tournament id: %s' %(id))

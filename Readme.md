@@ -1,14 +1,16 @@
 # Mtg Tournament scrapper
-Python
 
-#### Run app on local
+## Python
+
+## Run app on local
+
 - py app.py
 
-#### Docker Scrapper
-> /functions/db.py has commented code to run on docker or local environment
-- /scrapper
+## Docker Scrapper
+
 - docker-compose build
 - docker-compose up -d
 
-#### References
-- https://hub.docker.com/
+## References
+
+- <https://hub.docker.com/>

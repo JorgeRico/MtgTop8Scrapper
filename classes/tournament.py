@@ -20,16 +20,17 @@ class Tournament():
                         text           = tournamentDivs.text
                         textSplit      = text.split(' - ')
                         tournamentDate = textSplit[1]
+                        players        = textSplit[0].replace('players', '')
                     break
                 num += 1
             break
 
-        return self.saveTournament(idTournament, tournamentName, tournamentDate, idLeague)
+        return self.saveTournament(idTournament, tournamentName, tournamentDate, idLeague, players)
     
-    def saveTournament(self, idTournament, name, date, idLeague):
+    def saveTournament(self, idTournament, name, date, idLeague, players):
         db         = Db()
         connection = db.connection()
-        query      = 'INSERT INTO tournament (idTournament, name, date, idLeague) VALUES ( "%s", "%s", "%s", "%s" );' %(idTournament, name, date, idLeague)
+        query      = 'INSERT INTO tournament (idTournament, name, date, idLeague, players) VALUES ( "%s", "%s", "%s", "%s", "%s" );' %(idTournament, name, date, idLeague, players)
         
         return db.executeInsertQuery(connection, query)
     

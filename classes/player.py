@@ -40,6 +40,7 @@ class Player:
     def setPlayerDeck(self):
         deck   = Deck()
         result = self.playerHasIdDeckOnDB()
+
         if (result[0][0] is None):
             print(" - Insert deck player: %s - %s" %(self.getPlayerName(), self.getPlayerDeckName()))
             idDeck = deck.savePlayerDeck(self.getPlayerDeckName(), self.getIdPlayer())
