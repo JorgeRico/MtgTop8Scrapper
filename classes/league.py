@@ -19,6 +19,6 @@ class League:
         db         = Db()
         connection = db.connection()
         
-        query = 'INSERT INTO league (id, name, year) VALUES ( "%s", "%s", "%s" ) ' %(self.id, self.name, self.year)
+        query = 'INSERT INTO league (id, name, year, active) VALUES ( "%s", "%s", "%s", 1 ) ' %(self.id, self.name, self.year)
         query += 'ON DUPLICATE KEY UPDATE id="%s", name="%s", year="%s";' %(self.id, self.name, self.year)
         db.executeInsertQuery(connection, query)

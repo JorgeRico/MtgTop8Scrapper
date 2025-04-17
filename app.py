@@ -6,19 +6,11 @@ from classes.league import League
 # tournaments
 # league and name hardcoded
 # ids from www.mtgtop8.com
+# ########################################################################
+# IMPORTANT :
+# current league needs to by changed manually on DB when new season starts
+# ########################################################################
 tournaments = [
-    {
-        'league' : 1,
-        'name'   : 'LCL Ingenio 2024',
-        'ids'    : [ 51344, 52277, 53297, 54778, 55496, 56478, 57208, 58206, 59596, 60803, 61540, 62960 ],
-        'year'   : 2024
-    },
-    {
-        'league' : 2,
-        'name'   : 'Lliga Minoria 2024',
-        'ids'    :  [ 52033, 52633, 53585, 54411, 55694, 56867, 57385, 58500, 59909, 60407, 61872 ],
-        'year'   : 2024
-    },
     {
         'league' : 3,
         'name'   : 'LCL Ingenio 2025',
@@ -31,23 +23,17 @@ tournaments = [
         'ids'    :  [ 64013, 65170, 66796 ],
         'year'   : 2025
     },
-    {
-        'league' : 6,
-        'name'   : 'Lliga Minoria 2023',
-        'ids'    :  [ 41078, 41746, 42776, 45801, 47102, 47808, 48961, 49678, 50144 ],
-        'year'   : 2023
-    },
 ]
 
 # scrapping data
 def scrapping(id, name, idLeague):
     soup = Scrapping()
-    top = Top8()
+    top  = Top8()
 
     # scrapping
     soup = soup.getSoup(soup.getEventUrl(id))
     # Tournament info
-    tournament   = Tournament()
+    tournament = Tournament()
 
     # Check if tournament exists on DB
     result = tournament.existsTournamentOnDB(id)

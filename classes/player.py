@@ -10,6 +10,7 @@ class Player:
         self.cards        = None
         self.idPlayer     = None
         self.idTournament = idTournament
+        self.db           = Db()
     
     def getPlayerNum(self):
         return str(self.num)
@@ -54,31 +55,23 @@ class Player:
             print('deck exists')
 
     def savePlayer(self, idTournament):
-        db          = Db()
-        connection  = db.connection()
-        query       = 'INSERT INTO player (name, position, idTournament) VALUES ( "%s", "%s", "%s" );' %(self.getPlayerName(), self.getPlayerNum(), idTournament)
-        self.setIdPlayer(db.executeInsertQuery(connection, query))
+        query = 'INSERT INTO player (name, position, idTournament) VALUES ( "%s", "%s", "%s" );' %(self.getPlayerName(), self.getPlayerNum(), idTournament)
+        self.setIdPlayer(self.db.executeInsertQuery(self.db.connection(), query))
     
     def savePlayerIdDeck(self, idDeck):
-        db          = Db()
-        connection  = db.connection()
         updateQuery = "UPDATE player SET idDeck = '%s' WHERE id = '%s'" %(idDeck, self.getIdPlayer())
-        db.executeQuery(connection, updateQuery)
+        self.db.executeQuery(self.db.connection(), updateQuery)
 
     def printPlayerDeckCards(self):
         for item in self.cards:
             print(item.printCard())
 
     def existsPlayerOnDB(self, idTournament):
-        db         = Db()
-        connection = db.connection()
-        query      = 'SELECT id as idPlayer FROM player WHERE name = "%s" and position = "%s" and idTournament = "%s";' %(self.getPlayerName(), self.getPlayerNum(), idTournament)
+        query       = 'SELECT id as idPlayer FROM player WHERE name = "%s" and position = "%s" and idTournament = "%s";' %(self.getPlayerName(), self.getPlayerNum(), idTournament)
         
-        return db.selectQuery(connection, query)
+        return self.db.selectQuery(self.db.connection(), query)
     
     def playerHasIdDeckOnDB(self):
-        db         = Db()
-        connection = db.connection()
-        query      = 'SELECT idDeck as idDeck FROM player WHERE id = %s;' %(self.getIdPlayer())
+        query = 'SELECT idDeck as idDeck FROM player WHERE id = %s;' %(self.getIdPlayer())
         
-        return db.selectQuery(connection, query)
+        return self.db.selectQuery(self.db.connection(), query)

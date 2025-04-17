@@ -1,4 +1,5 @@
 from functions.db import Db
+
 class Tournament():
     
     def __main__(self, name, date):
