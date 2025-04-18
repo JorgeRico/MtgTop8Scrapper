@@ -20,6 +20,12 @@ tournaments = [
         'year'   : 2024
     },
     {
+        'league' : 2,
+        'name'   : 'Duels of Duals III @ Vilafranca del Penedes',
+        'ids'    :  [ 59281 ],
+        'year'   : 2024
+    },
+    {
         'league' : 5,
         'name'   : 'Vintage 2024',
         'ids'    : [ 52512, 55027, 56037, 56876, 57792, 61051, 61959 ],
@@ -31,4 +37,23 @@ tournaments = [
         'ids'    :  [ 41078, 41746, 42776, 45801, 47102, 47808, 48961, 49678, 50144 ],
         'year'   : 2023
     },
+    {
+        'league' : 6,
+        'name'   : '2° Duels of Duals @ Vilafranca del Penedes',
+        'ids'    :  [ 45321 ],
+        'year'   : 2023
+    },
+    {
+        'league' : 22,
+        'name'   : '1st Duel for Duals @ Barcelona',
+        'ids'    :  [ 38196 ],
+        'year'   : 2022
+    },
+    {
+        'league' : 23,
+        'name'   : 'LCL 2023',
+        'ids'    :  [ 51884 ],
+        'year'   : 2023
+    },
+
 ]
