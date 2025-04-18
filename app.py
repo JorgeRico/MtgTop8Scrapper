@@ -8,7 +8,7 @@ from classes.league import League
 # ids from www.mtgtop8.com
 # ########################################################################
 # IMPORTANT :
-# current league needs to by changed manually on DB when new season starts
+# current league needs to be changed manually on DB when new season starts
 # ########################################################################
 tournaments = [
     {
