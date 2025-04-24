@@ -12,16 +12,18 @@ from classes.league import League
 # ########################################################################
 tournaments = [
     {
-        'league' : 3,
-        'name'   : 'LCL Ingenio 2025',
-        'ids'    : [ 63650, 64751, 65832, 67365 ],
-        'year'   : 2025
+        'league'   : 3,
+        'name'     : 'LCL Ingenio 2025',
+        'ids'      : [ 63650, 64751, 65832, 67365 ],
+        'year'     : 2025,
+        'isLegacy' : 1
     },
     {
         'league' : 4,
         'name'   : 'Lliga Minoria 2025',
         'ids'    :  [ 64013, 65170, 66796 ],
-        'year'   : 2025
+        'year'   : 2025,
+        'isLegacy' : 1
     },
 ]
 
@@ -52,7 +54,7 @@ def scrapping(id, name, idLeague):
 def main(tournaments):
     for item in tournaments:
         print('   - Scrapping : %s' %(item['name']))
-        league = League(item['league'], item['name'], item['year'])
+        league = League(item['league'], item['name'], item['year'], item['isLegacy'])
         league.saveLeague()
         for id in item['ids']:
             print('     * Scrapping tournament id: %s' %(id))
